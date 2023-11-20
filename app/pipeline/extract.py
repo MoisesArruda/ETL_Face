@@ -51,6 +51,10 @@ print(f'Pasta Staging: {staging}')
 print(f'Pasta_Gdrive_1m: {destino}')
 
 
+class NoDatFilesErros(Exception):
+    """Exceção levantada quando não há arquivos .dat na pasta"""
+
+
 def verify_dat(origem):
     """
     Verifica se há arquivos .dat presentes na pasta One_Drive.
