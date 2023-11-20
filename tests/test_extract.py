@@ -1,5 +1,6 @@
 from app.pipeline.extract import definir_caminhos
 
+
 def test_definir_caminhos():
     caminhos = definir_caminhos()
     origem, staging, destino = caminhos

@@ -49,3 +49,34 @@ print('Estes são os caminhos de pasta')
 print(f'Pasta One: {origem}')
 print(f'Pasta Staging: {staging}')
 print(f'Pasta_Gdrive_1m: {destino}')
+
+
+def verify_dat(origem):
+    """
+    Verifica se há arquivos .dat presentes na pasta One_Drive.
+
+    Parameters:
+        origem(str): Caminho da pasta a ser verificada.
+
+    Return:
+        bool: True se há arquivos .dat, False se a pasta está vazia
+
+    Raises:
+        ValueError: Se não existirem arquivos na pasta
+
+    type: input_folder: str
+    """
+    if not os.path.exists(origem):
+        raise FileNotFoundError(f'A pasta {origem} não existe')
+
+    files_origem = glob.glob(f'{origem}/*.dat')
+    if not files_origem:
+        return False   # Nenhum arquivo .dat encontrado na pasta
+    else:
+        return True   # Arquivos .dat encontrados na pasta
+
+
+if verify_dat(origem):
+    print('Existem arquivos .dat na pasta.')
+else:
+    print('A pasta está vazia ou não contém arquivos .dat.')
