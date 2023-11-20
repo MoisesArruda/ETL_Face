@@ -49,4 +49,3 @@ print('Estes são os caminhos de pasta')
 print(f'Pasta One: {origem}')
 print(f'Pasta Staging: {staging}')
 print(f'Pasta Gdrive_1m: {destino}')
-
