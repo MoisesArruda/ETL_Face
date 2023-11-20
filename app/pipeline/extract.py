@@ -52,7 +52,7 @@ print(f'Pasta_Gdrive_1m: {destino}')
 
 
 class NoDatFilesErros(Exception):
-    """Exceção levantada quando não há arquivos .dat na pasta"""
+    """Exceção levantada quando não há arquivos .dat na pasta."""
 
 
 def verify_dat(origem):
@@ -75,12 +75,10 @@ def verify_dat(origem):
 
     files_origem = glob.glob(f'{origem}/*.dat')
     if not files_origem:
-        return False   # Nenhum arquivo .dat encontrado na pasta
+        raise NoDatFilesErros(
+            'A pasta {origem} não contém arquivos .dt'
+        )   # Nenhum arquivo .dat encontrado na pasta
     else:
-        return True   # Arquivos .dat encontrados na pasta
-
-
-if verify_dat(origem):
-    print('Existem arquivos .dat na pasta.')
-else:
-    print('A pasta está vazia ou não contém arquivos .dat.')
+        # Para cada arquivo na pasta, me retornar apenas o nome sem o caminho completo
+        nome_arquivos = [os.path.basename(arquivo) for arquivo in files_origem]
+        print(nome_arquivos)
