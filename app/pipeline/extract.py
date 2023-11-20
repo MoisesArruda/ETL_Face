@@ -81,4 +81,4 @@ def verify_dat(origem):
     else:
         # Para cada arquivo na pasta, me retornar apenas o nome sem o caminho completo
         nome_arquivos = [os.path.basename(arquivo) for arquivo in files_origem]
-        print(nome_arquivos)
+        print("Nomes de arquivos copiados")
