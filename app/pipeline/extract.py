@@ -30,12 +30,12 @@ def definir_caminhos():
         configurados antes de chamar esta função.
 
     """
-    # Onde os arquivos estão sendo disponibilizados
-    pasta_One = r'Caminho\One'
+     # Onde os arquivos estão sendo disponibilizados
+    pasta_One = '/mnt/c/Users/BlueShift/OneDrive/AmazonFACE'
     # Onde esses arquivos serão armazenados
-    pasta_Staging = r'Caminho\Staging'
+    pasta_Staging = '/mnt/c/Users/BlueShift/Documents/AFace/staging'
     # Arquivos de 1 minuto
-    pasta_Gdrive_1m = r'Caminho\1m'
+    pasta_Gdrive_1m = '/mnt/c/Users/BlueShift/Documents/AFace/1m'
 
     return pasta_One, pasta_Staging, pasta_Gdrive_1m
 
