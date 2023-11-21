@@ -30,12 +30,12 @@ def definir_caminhos():
         configurados antes de chamar esta função.
 
     """
-    # Onde os arquivos estão sendo disponibilizados
-    pasta_One = r'Caminho\One'
+     # Onde os arquivos estão sendo disponibilizados
+    pasta_One = '/mnt/c/Users/BlueShift/OneDrive/AmazonFACE'
     # Onde esses arquivos serão armazenados
-    pasta_Staging = r'Caminho\Staging'
+    pasta_Staging = '/mnt/c/Users/BlueShift/Documents/AFace/staging'
     # Arquivos de 1 minuto
-    pasta_Gdrive_1m = r'Caminho\1m'
+    pasta_Gdrive_1m = '/mnt/c/Users/BlueShift/Documents/AFace/1m'
 
     return pasta_One, pasta_Staging, pasta_Gdrive_1m
 
@@ -49,6 +49,10 @@ print('Estes são os caminhos de pasta')
 print(f'Pasta One: {origem}')
 print(f'Pasta Staging: {staging}')
 print(f'Pasta_Gdrive_1m: {destino}')
+
+
+class NoDatFilesErros(Exception):
+    """Exceção levantada quando não há arquivos .dat na pasta."""
 
 
 def verify_dat(origem):
@@ -71,12 +75,12 @@ def verify_dat(origem):
 
     files_origem = glob.glob(f'{origem}/*.dat')
     if not files_origem:
-        return False   # Nenhum arquivo .dat encontrado na pasta
+        raise NoDatFilesErros(
+            'A pasta {origem} não contém arquivos .dt'
+        )   # Nenhum arquivo .dat encontrado na pasta
     else:
-        return True   # Arquivos .dat encontrados na pasta
+        # Para cada arquivo na pasta, me retornar apenas o nome sem o caminho completo
+        nome_arquivos = [os.path.basename(arquivo) for arquivo in files_origem]
+        print("Nomes de arquivos copiados")
 
-
-if verify_dat(origem):
-    print('Existem arquivos .dat na pasta.')
-else:
-    print('A pasta está vazia ou não contém arquivos .dat.')
+        return nome_arquivos
