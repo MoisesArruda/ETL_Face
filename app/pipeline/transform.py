@@ -15,3 +15,6 @@ origem, staging, destino = definir_caminhos()
 # Obter a lista de arquivos DAT na pasta raiz
 arquivos_dat_1m = conferir_arquivos_nao_enviados_1m()
 arquivos_dat_30m = conferir_arquivos_nao_enviados_30m()
+
+print(arquivos_dat_1m)
+print(arquivos_dat_30m)
