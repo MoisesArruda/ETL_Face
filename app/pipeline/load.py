@@ -14,7 +14,7 @@ from extract import definindo_arquivos_dat_1m, definindo_arquivos_dat_30m, defin
 origem, staging, destino = definir_caminhos()
 
 # Modificar para obter os arquivos da pasta origem
-arquivos = verify_dat()
+arquivos = verify_dat(origem)
 
 
 def conferir_arquivos_nao_enviados_1m():
@@ -89,13 +89,13 @@ def enviar_arquivos_1m_para_staging():
         shutil.copy(caminho_arquivo_origem, caminho_arquivo_staging)
         # Para cada arquivo 1 mensagem
         print(f'Arquivo {arquivos} copiado para a pasta Staging')
-        qntd_enviada.append(+1)
+        qntd_enviada_1m.append(+1)
 
-    return qntd_enviada
+    return qntd_enviada_1m
 
 
-"""try:
-    qntd_enviada = enviar_arquivos_para_staging()
+try:
+    qntd_enviada = enviar_arquivos_1m_para_staging()
     print(f'Foi realizado o envio de {len(qntd_enviada)} arquivos')
 except (FileNotFoundError, ValueError) as e:
-    print(e)"""
+    print(e)
