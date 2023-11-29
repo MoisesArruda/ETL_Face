@@ -49,7 +49,7 @@ print(f'Pasta Staging: {staging}')
 print(f'Pasta Destino: {destino}')
 
 
-def verify_dat():
+def verify_dat(folder):
     """
     Verifica se há arquivos .dat presentes na pasta origem.
     Parameters:
@@ -60,10 +60,10 @@ def verify_dat():
         ValueError: Se não existirem arquivos na pasta
     type: input_folder: str
     """
-    if not os.path.exists(origem):
-        raise FileNotFoundError(f'A pasta {origem} não existe')
+    if not os.path.exists(folder):
+        raise FileNotFoundError(f'A pasta {folder} não existe')
 
-    files_origem = glob.glob(f'{origem}/*.dat')
+    files_origem = glob.glob(f'{folder}/*.dat')
     if not files_origem:
         raise ValueError('Erro: Não há arquivos .dat na pasta')
     else:
@@ -76,7 +76,7 @@ def verify_dat():
 
 
 try:
-    arquivos = verify_dat()
+    arquivos = verify_dat(origem)
     print(arquivos)
 except (FileNotFoundError, ValueError) as e:
     print(e)
