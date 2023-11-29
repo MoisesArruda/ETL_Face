@@ -11,7 +11,7 @@ import shutil
 import pandas as pd
 
 
-def definir_caminhos():
+def definir_caminhos(ORIGEM=None, STAGING=None, DESTINO=None):
     """
     Função responsável por definir o caminho dos diretórios.
     Return:
@@ -28,17 +28,18 @@ def definir_caminhos():
     """
 
     # Onde os arquivos estão sendo disponibilizados
-    ORIGEM = '/mnt/c/Users/BlueShift/OneDrive/AmazonFACE'
+    ORIGEM = ORIGEM or '/mnt/c/Users/BlueShift/OneDrive/AmazonFACE'
     # Onde esses arquivos serão armazenados
-    STAGING = '/mnt/c/Users/BlueShift/Documents/AFace/staging'
+    STAGING = STAGING or '/mnt/c/Users/BlueShift/Documents/AFace/staging'
     # Arquivos de 1 minuto
-    DESTINO = '/mnt/c/Users/BlueShift/Documents/AFace/1m'
+    DESTINO = DESTINO or '/mnt/c/Users/BlueShift/Documents/AFace/1m'
 
     return ORIGEM, STAGING, DESTINO
 
 
 # Armazenando a tupla retornada pela função
-caminhos = definir_caminhos()
+caminhos = definir_caminhos('/mnt/c/Users/BlueShift/OneDrive/AmazonFACE')
+print(caminhos)
 # Nessa linha de código acontece o desempacotamento dos valores da tupla
 origem, staging, destino = caminhos
 
@@ -48,7 +49,7 @@ print(f'Pasta Staging: {staging}')
 print(f'Pasta Destino: {destino}')
 
 
-def verify_dat():
+def verify_dat(folder):
     """
     Verifica se há arquivos .dat presentes na pasta origem.
     Parameters:
@@ -59,10 +60,10 @@ def verify_dat():
         ValueError: Se não existirem arquivos na pasta
     type: input_folder: str
     """
-    if not os.path.exists(origem):
-        raise FileNotFoundError(f'A pasta {origem} não existe')
+    if not os.path.exists(folder):
+        raise FileNotFoundError(f'A pasta {folder} não existe')
 
-    files_origem = glob.glob(f'{origem}/*.dat')
+    files_origem = glob.glob(f'{folder}/*.dat')
     if not files_origem:
         raise ValueError('Erro: Não há arquivos .dat na pasta')
     else:
@@ -75,22 +76,48 @@ def verify_dat():
 
 
 try:
-    arquivos = verify_dat()
+    arquivos = verify_dat(origem)
     print(arquivos)
 except (FileNotFoundError, ValueError) as e:
     print(e)
 
 
-def definindo_arquivos_dat():
+def definindo_arquivos_dat_1m():
     """
     Está sendo definido o nome dos arquivos de 1 minuto
     """
     # Variável para armazenar parte do nome do arquivo
     METEO_1M = 'CR6_T1_meteo_'
-    # Lista para armazenar a quantidade de arquivos 1m no One Drive
+        # Lista para armazenar a quantidade de arquivos 1m no One Drive
     METEO_30M = 'meteoMedia30'
     # Lista para armazenar a quantidade de arquivos 1m no One Drive
     quantidade_1m = []
+
+    # Loop para iterar em cada arquivo na pasta
+    for arquivo in arquivos:
+        if METEO_30M in arquivo:
+            pass
+        elif METEO_1M in arquivo:
+            quantidade_1m.append(arquivo)
+        else:
+            print('Nenhum arquivo na pasta')
+
+    return quantidade_1m
+
+
+resultados_1m = definindo_arquivos_dat_1m()
+print(f'Quantidade de arquivos 1m: {len(resultados_1m)}')
+
+
+
+def definindo_arquivos_dat_30m():
+    """
+    Está sendo definido o nome dos arquivos de 30 minutos
+    """
+    # Lista para armazenar a quantidade de arquivos 1m no One Drive
+    METEO_30M = 'meteoMedia30'
+        # Variável para armazenar parte do nome do arquivo
+    METEO_1M = 'CR6_T1_meteo_'
     # Lista para armazenar a quantidade de arquivos 30m no One Drive
     quantidade_30m = []
 
@@ -99,13 +126,12 @@ def definindo_arquivos_dat():
         if METEO_30M in arquivo:
             quantidade_30m.append(arquivo)
         elif METEO_1M in arquivo:
-            quantidade_1m.append(arquivo)
+            pass
         else:
             print('Nenhum arquivo na pasta')
 
-    return quantidade_30m, quantidade_1m
+    return quantidade_30m
 
 
-resultados_30m, resultados_1m = definindo_arquivos_dat()
+resultados_30m = definindo_arquivos_dat_30m()
 print(f'Quantidade de arquivos 30m: {len(resultados_30m)}')
-print(f'Quantidade de arquivos 1m: {len(resultados_1m)}')
