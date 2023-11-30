@@ -84,6 +84,9 @@ def gerar_arquivo_csv(df,caminho_csv):
 
 
 df_final = criar_DataFrame(arquivos_dat_1m, staging)
-df_final.head()
 caminho_csv = os.path.join(destino, 'csv_1m.csv')
+gerar_csv = gerar_arquivo_csv(df_final, caminho_csv)
+
+df_final = criar_DataFrame(arquivos_dat_30m, staging)
+caminho_csv = os.path.join(destino, 'csv_30m.csv')
 gerar_csv = gerar_arquivo_csv(df_final, caminho_csv)
