@@ -8,7 +8,12 @@ import os
 # Manipulação de arquivos e diretórios
 import shutil
 
-from extract import definindo_arquivos_dat_1m, definindo_arquivos_dat_30m, definir_caminhos, verify_dat
+from extract import (
+    definindo_arquivos_dat_1m,
+    definindo_arquivos_dat_30m,
+    definir_caminhos,
+    verify_dat,
+)
 
 # Definindo constantes globais
 origem, staging, destino = definir_caminhos()
@@ -21,6 +26,8 @@ def conferir_arquivos_nao_enviados_1m():
     """
     Este trecho tem o objetivo de verificar quais arquivos ainda
     não foram enviados para a pasta destino
+    Return:
+        arquivo_1m_apenas_origem (list): Lista com arquivos de 1 minuto que ainda não foram enviados para a pasta destino.
     """
 
     arquivo_1m_apenas_origem = []
@@ -29,26 +36,28 @@ def conferir_arquivos_nao_enviados_1m():
 
     # Loop que vai iterar sobre os arquivos 1m
     for arquivo in quantidade_1m:
-        # Apenas o nome do arquivo, que não está na pasta 1m do drive
+        # Apenas o nome do arquivo, que não está na pasta destino
         if os.path.basename(arquivo) not in [
             os.path.basename(x) for x in destino
         ]:
             # Adicionar o nome do arquivo na lista
             arquivo_1m_apenas_origem.append(arquivo)
 
-    # Retornar a quantidade de arquivo
-    print(f'Arquivos de 1 minuto: {len(arquivo_1m_apenas_origem)}')
     return arquivo_1m_apenas_origem
 
 
 arquivo_1m_apenas_origem = conferir_arquivos_nao_enviados_1m()
-print(arquivo_1m_apenas_origem)
+# Retornar a quantidade de arquivos
+print(f'Arquivos de 1 minuto: {len(arquivo_1m_apenas_origem)}')
+# print(arquivo_1m_apenas_origem)
 
 
 def conferir_arquivos_nao_enviados_30m():
     """
     Este trecho tem o objetivo de verificar quais arquivos ainda
     não foram enviados para a pasta destino
+    Return:
+        arquivo_1m_apenas_origem (list): Lista com arquivos de 1 minuto que ainda não foram enviados para a pasta destino.
     """
 
     arquivo_30m_apenas_origem = []
@@ -64,18 +73,21 @@ def conferir_arquivos_nao_enviados_30m():
             # Adicionar o nome do arquivo na lista
             arquivo_30m_apenas_origem.append(arquivo)
 
-    # Retornar a quantidade de arquivo
-    print(f'Arquivos de 30 minutos: {len(arquivo_30m_apenas_origem)}')
     return arquivo_30m_apenas_origem
 
+
 arquivo_30m_apenas_origem = conferir_arquivos_nao_enviados_30m()
-print(arquivo_30m_apenas_origem)
+# Retornar a quantidade de arquivos
+print(f'Arquivos de 30 minutos: {len(arquivo_30m_apenas_origem)}')
+# print(arquivo_30m_apenas_origem)
 
 
 def enviar_arquivos_1m_para_staging():
     """
     Deve enviar os arquivos ainda não enviados da pasta Origem
     para a pasta staging
+    Return:
+        qntd_enviada_1m (list): Lista com o nome dos arquivos que foram enviados para a pasta Staging
     """
     qntd_enviada_1m = []
 
