@@ -82,7 +82,7 @@ print(f'Arquivos de 30 minutos: {len(arquivo_30m_apenas_origem)}')
 # print(arquivo_30m_apenas_origem)
 
 
-def enviar_arquivos_1m_para_staging(folder:None):
+def enviar_arquivos_1m_para_staging(folder: None):
     """
     Deve enviar os arquivos ainda não enviados da pasta Origem
     para a pasta staging
@@ -113,7 +113,7 @@ except (FileNotFoundError, ValueError) as e:
     print(e)
 
 
-def enviar_arquivos_30m_para_staging(folder:None):
+def enviar_arquivos_30m_para_staging(folder: None):
     """
     Deve enviar os arquivos ainda não enviados da pasta Origem
     para a pasta staging

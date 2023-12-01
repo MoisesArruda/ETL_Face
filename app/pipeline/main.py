@@ -1,13 +1,13 @@
-"Pacote principal de execução"
+"""Pacote principal de execução"""
 
 from extract import definir_caminhos, verify_dat
-from transform import criar_DataFrame, criar_arquivo_csv, gerar_arquivo_csv
 from load import (
     conferir_arquivos_nao_enviados_1m,
     conferir_arquivos_nao_enviados_30m,
     enviar_arquivos_1m_para_staging,
     enviar_arquivos_30m_para_staging,
 )
+from transform import criar_arquivo_csv, criar_DataFrame, gerar_arquivo_csv
 
 
 def main():
@@ -21,7 +21,7 @@ def main():
 
     # Pacote de Carregamento
 
-    try: 
+    try:
         qntd_enviada_1m = enviar_arquivos_1m_para_staging(staging)
         print(f'Foi realizado o envio de {len(qntd_enviada_1m)} arquivos')
     except (FileNotFoundError, ValueError) as e:
@@ -48,5 +48,5 @@ def main():
     gerar_csv_30m = gerar_arquivo_csv(df_30m, criar_csv_30m)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
