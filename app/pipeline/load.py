@@ -82,7 +82,7 @@ print(f'Arquivos de 30 minutos: {len(arquivo_30m_apenas_origem)}')
 # print(arquivo_30m_apenas_origem)
 
 
-def enviar_arquivos_1m_para_staging():
+def enviar_arquivos_1m_para_staging(folder:None):
     """
     Deve enviar os arquivos ainda não enviados da pasta Origem
     para a pasta staging
@@ -96,24 +96,24 @@ def enviar_arquivos_1m_para_staging():
         # Buscar o caminho desse arquivo no One Drive
         caminho_arquivo_origem = os.path.join(origem, arquivos)
         # Buscar a pasta Staging no GDrive
-        caminho_arquivo_staging = os.path.join(staging, arquivos)
+        caminho_arquivo_staging = os.path.join(folder, arquivos)
         # Copiar o arquivo de uma pasta para outra
         shutil.copy(caminho_arquivo_origem, caminho_arquivo_staging)
         # Para cada arquivo 1 mensagem
-        print(f'Arquivo {arquivos} copiado para a pasta Staging')
+        print(f'Arquivo {arquivos} copiado para a pasta {folder}')
         qntd_enviada_1m.append(+1)
 
     return qntd_enviada_1m
 
 
 try:
-    qntd_enviada = enviar_arquivos_1m_para_staging()
+    qntd_enviada = enviar_arquivos_1m_para_staging(staging)
     print(f'Foi realizado o envio de {len(qntd_enviada)} arquivos')
 except (FileNotFoundError, ValueError) as e:
     print(e)
 
 
-def enviar_arquivos_30m_para_staging():
+def enviar_arquivos_30m_para_staging(folder:None):
     """
     Deve enviar os arquivos ainda não enviados da pasta Origem
     para a pasta staging
@@ -127,18 +127,18 @@ def enviar_arquivos_30m_para_staging():
         # Buscar o caminho desse arquivo no One Drive
         caminho_arquivo_origem = os.path.join(origem, arquivos)
         # Buscar a pasta Staging no GDrive
-        caminho_arquivo_staging = os.path.join(staging, arquivos)
+        caminho_arquivo_staging = os.path.join(folder, arquivos)
         # Copiar o arquivo de uma pasta para outra
         shutil.copy(caminho_arquivo_origem, caminho_arquivo_staging)
         # Para cada arquivo 1 mensagem
-        print(f'Arquivo {arquivos} copiado para a pasta Staging')
+        print(f'Arquivo {arquivos} copiado para a pasta {folder}')
         qntd_enviada_30m.append(+1)
 
     return qntd_enviada_30m
 
 
 try:
-    qntd_enviada = enviar_arquivos_30m_para_staging()
-    print(f'Foi realizado o envio de {len(qntd_enviada)} arquivos')
+    qntd_enviada_30m = enviar_arquivos_30m_para_staging(staging)
+    print(f'Foi realizado o envio de {len(qntd_enviada_30m)} arquivos')
 except (FileNotFoundError, ValueError) as e:
     print(e)
