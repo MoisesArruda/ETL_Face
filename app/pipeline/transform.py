@@ -8,6 +8,8 @@ from extract import definir_caminhos
 from load import (
     conferir_arquivos_nao_enviados_1m,
     conferir_arquivos_nao_enviados_30m,
+    enviar_arquivos_1m,
+    enviar_arquivos_30m,
 )
 
 caminhos = definir_caminhos()
@@ -120,23 +122,23 @@ def atualizar_arquivo_csv(df, caminho_csv):
 df_final = criar_DataFrame(arquivos_dat_1m, staging)
 nome_csv = 'csv_1m'
 criar_csv = criar_arquivo_csv(destino, nome_csv)
-gerar_csv = gerar_arquivo_csv(df_final, criar_csv)
+gerar_csv = atualizar_arquivo_csv(df_final, criar_csv)
 
 df_final = criar_DataFrame(arquivos_dat_30m, staging)
 nome_csv = 'csv_30m'
 criar_csv = criar_arquivo_csv(destino, nome_csv)
-gerar_csv = gerar_arquivo_csv(df_final, criar_csv)
+gerar_csv = atualizar_arquivo_csv(df_final, criar_csv)
 
 
 try:
-    qntd_enviada_1m = enviar_arquivos_1m_para_staging(destino)
+    qntd_enviada_1m = enviar_arquivos_1m(destino)
     print(f'Foi realizado o envio de {len(qntd_enviada_1m)} arquivos')
 except (FileNotFoundError, ValueError) as e:
     print(e)
 
 
 try:
-    qntd_enviada_30m = enviar_arquivos_30m_para_staging(destino)
+    qntd_enviada_30m = enviar_arquivos_30m(destino)
     print(f'Foi realizado o envio de {len(qntd_enviada_30m)} arquivos')
 except (FileNotFoundError, ValueError) as e:
     print(e)

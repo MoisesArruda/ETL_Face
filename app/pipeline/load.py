@@ -84,7 +84,7 @@ print(f'Arquivos de 30 minutos: {len(arquivo_30m_apenas_origem)}')
 # print(arquivo_30m_apenas_origem)
 
 
-def enviar_arquivos_1m_para_staging(folder: str) -> List[str]:
+def enviar_arquivos_1m(folder: str) -> List[str]:
     """
     Esta função envia os arquivos que ainda não foram enviados da pasta 'Origem' para a pasta 'staging'.
 
@@ -112,13 +112,13 @@ def enviar_arquivos_1m_para_staging(folder: str) -> List[str]:
 
 
 try:
-    qntd_enviada = enviar_arquivos_1m_para_staging(staging)
-    print(f'Foi realizado o envio de {len(qntd_enviada)} arquivos')
+    qntd_enviada_1m = enviar_arquivos_1m(staging)
+    print(f'Foi realizado o envio de {len(qntd_enviada_1m)} arquivos')
 except (FileNotFoundError, ValueError) as e:
     print(e)
 
 
-def enviar_arquivos_30m_para_staging(folder: str):
+def enviar_arquivos_30m(folder: str):
     """
     Copia os arquivos da pasta 'Origem' para a pasta 'staging'.
 
@@ -146,7 +146,49 @@ def enviar_arquivos_30m_para_staging(folder: str):
 
 
 try:
-    qntd_enviada_30m = enviar_arquivos_30m_para_staging(staging)
+    qntd_enviada_30m = enviar_arquivos_30m(staging)
     print(f'Foi realizado o envio de {len(qntd_enviada_30m)} arquivos')
 except (FileNotFoundError, ValueError) as e:
     print(e)
+
+
+
+def excluir_arquivos_enviados_1m(folder=staging) -> List[str]:
+    """
+    Os arquivos que foram enviados para a pasta destino serão excluidos desta pasta temporária
+    
+    Args:
+        folder: O caminho da pasta 'staging'.
+
+    Returns:
+        qntd_excluida_1m (list): Uma lista com os nomes dos arquivos que foram excluidos da pasta 'staging'.
+    """
+    qntd_excluida_1m = []
+    for arquivo in qntd_enviada_1m:
+        caminho_arquivo = os.path.join(staging, arquivo)
+        os.remove(caminho_arquivo)
+        # print(f'Arquivo {arquivo} excluído')
+        qntd_excluida_1m.append(+1)
+
+    return qntd_excluida_1m
+
+
+def excluir_arquivos_enviados_30m(folder=staging) -> List[str]:
+    """
+    Os arquivos que foram enviados para a pasta destino serão excluidos desta pasta temporária
+    
+    Args:
+        folder: O caminho da pasta 'staging'.
+
+    Returns:
+        qntd_excluida_30m (list): Uma lista com os nomes dos arquivos que foram excluidos da pasta 'staging'.
+    """
+    qntd_excluida_30m = []
+    for arquivo in qntd_enviada_30m:
+        caminho_arquivo = os.path.join(staging, arquivo)
+        os.remove(caminho_arquivo)
+        # print(f'Arquivo {arquivo} excluído')
+        qntd_excluida_30m.append(+1)
+
+    return qntd_excluida_30m
+
