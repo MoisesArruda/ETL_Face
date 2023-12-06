@@ -18,49 +18,47 @@ origem, staging, destino = definir_caminhos()
 # Obter a lista de arquivos DAT na pasta raiz
 arquivos_dat_1m = conferir_arquivos_nao_enviados_1m()
 arquivos_dat_30m = conferir_arquivos_nao_enviados_30m()
-"""Pacote de transformação."""
-import glob
-import os
-
-import pandas as pd
-from extract import definir_caminhos, verify_dat
-from load import (
-    conferir_arquivos_nao_enviados_1m,
-    conferir_arquivos_nao_enviados_30m,
-    enviar_arquivos_1m_para_staging,
-    enviar_arquivos_30m_para_staging,
-)
-
-# Armazenando a tupla retornada pela função
-caminhos = definir_caminhos()
-origem, staging, destino = caminhos
-
-# Modificar para obter os arquivos da pasta origem
-arquivos = verify_dat(staging)
-
-# Obter a lista de arquivos DAT na pasta raiz
-arquivos_dat_1m = conferir_arquivos_nao_enviados_1m()
-arquivos_dat_30m = conferir_arquivos_nao_enviados_30m()
 
 
 def detectar_separador(arquivo):
     """
-    Possui a finalidade de detectar o tipo de separador presente no arquivo original
+    Detecta o tipo de separador presente no arquivo original
+
+    Args:
+        file_path (str): Caminho para o arquivo.
+
+    Returns:
+        str: O separador detectado.
+
+    Raises:
+        FileNotFoundError: If the file does not exist.
     """
-    with open(arquivo, 'r', encoding='utf-8') as file:
-        # Leitura dos primeiros 1024 bytes para detectar o separador
-        conteudo = file.read(1024)
-        if ';' in conteudo:
-            return ';'
-        elif ',' in conteudo:
-            return ','
-        else:
-            # Use '\t' como separador padrão se nenhum for detectado
-            return '\t'
+    try:
+        with open(arquivo, 'r', encoding='utf-8') as file:
+            # Leitura dos primeiros 1024 bytes para detectar o separador
+            content = file.read(1024)
+            if ';' in content:
+                return ';'
+            elif ',' in content:
+                return ','
+            else:
+                # Use '\t' como separador padrão se nenhum for detectado
+                return '\t'
+    except FileNotFoundError:
+        raise FileNotFoundError(f"The file '{arquivo}' does not exist.")
 
 
 def criar_DataFrame(arquivos, pasta):
+    """
+    Creates a pandas DataFrame by reading multiple CSV files from a specified directory and concatenating them.
 
+    Args:
+        arquivos (list): A list of file names to be read.
+        pasta (str): The directory path where the files are located.
+
+    Returns:
+        pandas.DataFrame: The concatenated DataFrame containing data from all the CSV files.
+    """
     dfs = []
     for arquivo in arquivos:
         caminho_completo = os.path.join(pasta, arquivo)
@@ -76,6 +74,16 @@ def criar_DataFrame(arquivos, pasta):
 
 
 def criar_arquivo_csv(pasta, nome_arquivo):
+    """
+    Create a CSV file in the specified directory with the given name.
+
+    Args:
+        pasta (str): The directory where the CSV file will be created.
+        nome_arquivo (str): The name of the CSV file.
+
+    Returns:
+        str: The path of the created CSV file.
+    """
 
     caminho_csv = f'{pasta}/{nome_arquivo}.csv'
     with open(caminho_csv, 'w', newline='') as csvfile:
@@ -83,15 +91,17 @@ def criar_arquivo_csv(pasta, nome_arquivo):
     return caminho_csv
 
 
-def criar_arquivo_csv(pasta, nome_arquivo):
+def atualizar_arquivo_csv(df, caminho_csv):
+    """
+    Atualiza a CSV file from a pandas DataFrame.
 
-    caminho_csv = f'{pasta}/{nome_arquivo}.csv'
-    with open(caminho_csv, 'w', newline='') as csvfile:
-        writer = csv.writer(csvfile, delimiter=',')
-    return caminho_csv
+    Parameters:
+        df (pandas.DataFrame): The DataFrame to be saved as a CSV file.
+        caminho_csv (str): The path of the CSV file to be generated.
 
-
-def gerar_arquivo_csv(df, caminho_csv):
+    Returns:
+        None
+    """
 
     df_sem_duplicatas = df.drop_duplicates()
 

@@ -7,21 +7,30 @@ import os
 
 # Manipulação de arquivos e diretórios
 import shutil
+from typing import List
 
 import pandas as pd
 
 
 def definir_caminhos(ORIGEM=None, STAGING=None, DESTINO=None):
     """
-    Função responsável por definir o caminho dos diretórios.
+    Define os caminhos dos diretórios.
+
+    Args:
+        ORIGEM (str): Caminho para o diretório de origem. Padrão é None.
+        STAGING (str): Caminho para o diretório de staging. Padrão é None.
+        DESTINO (str): Caminho para o diretório de destino. Padrão é None.
+
     Return:
         tuple: Uma tupla contendo os caminhos para a pasta Origem, Staging e Destino.
+
     Example:
         >>> caminhos = definir_caminhos()
         >>> pasta_Origem, pasta_Staging, pasta_Destino = caminhos
         >>> print(f'Pasta Origem: {Origem}')
         >>> print(f'Pasta Staging: {Staging}')
         >>> print(f'Pasta Destino: {Destino}')
+
     Note:
         Certifique-se de que os caminhos estejam corretamente
         configurados antes de chamar esta função. Isso pode ser feito
@@ -50,13 +59,16 @@ print(f'Pasta Staging: {staging}')
 print(f'Pasta Destino: {destino}')
 
 
-def verify_dat(folder):
+def verify_dat(folder: str) -> List[str]:
     """
     Verifica se há arquivos .dat presentes na pasta origem.
-    Parameters:
+
+    Args:
         folder(str): Caminho da pasta a ser verificada.
+
     Return:
         nomes_arquivos (list): Uma lista contendo os nomes dos arquivos da pasta.
+
     Raises:
         FileNotFoundError: Se a pasta não existir.
         ValueError: Se não existirem arquivos .dat na pasta.
@@ -90,6 +102,7 @@ except (FileNotFoundError, ValueError) as e:
 def definindo_arquivos_dat_1m():
     """
     Será retornado uma lista com o nome dos arquivos de 1 minuto
+
     Return:
         quantidade_1m (list): Lista com os arquivos de 1 minuto presentes na pasta
     """
@@ -123,9 +136,10 @@ except ValueError as e:
 
 def definindo_arquivos_dat_30m():
     """
-    Está sendo definido o nome dos arquivos de 30 minutos
-    Return:
-        quantidade_30m (list): Lista com os arquivos de 30 minutos presentes na pasta
+    Define os nomes dos arquivos de 30 minutos na pasta.
+
+     Returns:
+        quantidade_30m (List[str]): Lista de arquivos de 30 minutos na pasta.
     """
     # Lista para armazenar a quantidade de arquivos 1m no One Drive
     METEO_30M = 'meteoMedia30'

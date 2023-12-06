@@ -15,6 +15,8 @@ from extract import (
     verify_dat,
 )
 
+from typing import List
+
 # Definindo constantes globais
 origem, staging, destino = definir_caminhos()
 
@@ -22,12 +24,12 @@ origem, staging, destino = definir_caminhos()
 arquivos = verify_dat(origem)
 
 
-def conferir_arquivos_nao_enviados_1m():
+def conferir_arquivos_nao_enviados_1m() -> List[str]:
     """
-    Este trecho tem o objetivo de verificar quais arquivos ainda
-    não foram enviados para a pasta destino
+    Verifica quais arquivos de 1 minuto ainda não foram enviados para a pasta de destino.
+
     Return:
-        arquivo_1m_apenas_origem (list): Lista com arquivos de 1 minuto que ainda não foram enviados para a pasta destino.
+       arquivo_1m_apenas_origem (List[str]): Lista com arquivos de 1 minuto que ainda não foram enviados para a pasta destino.
     """
 
     arquivo_1m_apenas_origem = []
@@ -54,10 +56,10 @@ print(f'Arquivos de 1 minuto: {len(arquivo_1m_apenas_origem)}')
 
 def conferir_arquivos_nao_enviados_30m():
     """
-    Este trecho tem o objetivo de verificar quais arquivos ainda
-    não foram enviados para a pasta destino
+    Verifica quais arquivos de 30 minutos ainda não foram enviados para a pasta de destino.
+
     Return:
-        arquivo_1m_apenas_origem (list): Lista com arquivos de 1 minuto que ainda não foram enviados para a pasta destino.
+    arquivo_30m_apenas_origem (list): Lista com arquivos de 30 minutos que ainda não foram enviados para a pasta de destino.
     """
 
     arquivo_30m_apenas_origem = []
@@ -82,12 +84,15 @@ print(f'Arquivos de 30 minutos: {len(arquivo_30m_apenas_origem)}')
 # print(arquivo_30m_apenas_origem)
 
 
-def enviar_arquivos_1m_para_staging(folder: None):
+def enviar_arquivos_1m_para_staging(folder: str) -> List[str]:
     """
-    Deve enviar os arquivos ainda não enviados da pasta Origem
-    para a pasta staging
-    Return:
-        qntd_enviada_1m (list): Lista com o nome dos arquivos que foram enviados para a pasta Staging
+    Esta função envia os arquivos que ainda não foram enviados da pasta 'Origem' para a pasta 'staging'.
+
+    Args:
+        folder (str): O caminho da pasta 'staging'.
+
+    Returns:
+        List[str]: Uma lista com os nomes dos arquivos que foram enviados para a pasta 'staging'.
     """
     qntd_enviada_1m = []
 
@@ -113,12 +118,15 @@ except (FileNotFoundError, ValueError) as e:
     print(e)
 
 
-def enviar_arquivos_30m_para_staging(folder: None):
+def enviar_arquivos_30m_para_staging(folder: str):
     """
-    Deve enviar os arquivos ainda não enviados da pasta Origem
-    para a pasta staging
-    Return:
-        qntd_enviada_30m (list): Lista com o nome dos arquivos que foram enviados para a pasta Staging
+    Copia os arquivos da pasta 'Origem' para a pasta 'staging'.
+
+    Args:
+        folder (str): O caminho para a pasta 'staging'.
+
+    Returns:
+        qntd_enviada_30m (list): Uma lista com os nomes dos arquivos que foram copiados para a pasta 'staging'.
     """
     qntd_enviada_30m = []
 
